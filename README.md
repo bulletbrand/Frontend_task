@@ -1,3 +1,6 @@
+# In case if you have problem with starting project just downgrade node version with nvm
+# or add "start": "env-cmd -f .env.client.config react-scripts --openssl-legacy-provider start"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
