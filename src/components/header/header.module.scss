@@ -1,0 +1,23 @@
+.appHeader {
+  min-height: 10vh;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  .appLogo {
+    height: 4vmin;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.06);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: appLogo-spin infinite 20s linear;
+    }
+  }
+}
