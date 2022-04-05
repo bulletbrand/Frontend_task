@@ -7,9 +7,6 @@ import { StepProps } from "./Buyflow.types";
 
 export const AgeStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps): JSX.Element => {
   const methods = useFormContext();
-  const age = methods.watch("age");
-
-  const isButtonDisabled = (): boolean => !age || !!Object.entries(methods.formState.errors)?.length;
 
   return (
     <>
@@ -24,7 +21,7 @@ export const AgeStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps
           label="Age:"
         />
       </div>
-      <Button disabled={isButtonDisabled()} type="button" onClick={() => nextStepCallback(nextStep)}>
+      <Button type="button" onClick={() => nextStepCallback(nextStep, ["age"])}>
         Next
       </Button>
     </>

@@ -7,9 +7,6 @@ import { StepProps } from "./Buyflow.types";
 
 export const EmailStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps): JSX.Element => {
   const methods = useFormContext();
-  const email = methods.watch("email");
-
-  const isButtonDisabled = (): boolean => !email || !!Object.entries(methods.formState.errors)?.length;
 
   return (
     <>
@@ -24,7 +21,7 @@ export const EmailStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepPro
           type="email"
         />
       </div>
-      <Button disabled={isButtonDisabled()} type="button" onClick={() => nextStepCallback(nextStep)}>
+      <Button type="button" onClick={() => nextStepCallback(nextStep, ["email"])}>
         Next
       </Button>
     </>

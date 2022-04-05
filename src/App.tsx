@@ -5,10 +5,9 @@ import withLayout from "./hocks/withLayout";
 import { compose } from "./utils/helpers";
 import {
   NotFound,
-  WelcomePage,
   InsurancesPage,
-  DeveloperInsurancePage,
-  DesignerInsurancePage,
+  DeveloperInsurancesPage,
+  DesignerInsurancesPage,
   DesignerBuyFlow,
   DeveloperBuyFlow,
 } from "./pages";
@@ -16,10 +15,9 @@ import {
 const App = () => {
   return (
     <Switch>
-      <Route path={routes.WELCOME_PAGE} component={WelcomePage} exact />
-      <Route path={routes.INSURANCES_PAGE} component={InsurancesPage} />
-      <Route exact path={routes.DEVELOPER_INSURANCES_PAGE} component={DeveloperInsurancePage} />
-      <Route exact path={routes.DESIGNER_INSURANCES_PAGE} component={DesignerInsurancePage} />
+      <Route path={routes.INSURANCES_PAGE} component={InsurancesPage} exact />
+      <Route exact path={routes.DEVELOPER_INSURANCES_PAGE} component={DeveloperInsurancesPage} />
+      <Route exact path={routes.DESIGNER_INSURANCES_PAGE} component={DesignerInsurancesPage} />
       <Route exact path={`${routes.DEVELOPER_INSURANCES_FORM}/:productId`} component={DeveloperBuyFlow} />
       <Route exact path={`${routes.DESIGNER_INSURANCES_FORM}/:productId`} component={DesignerBuyFlow} />
       <Route exact path={routes.NOT_FOUND} component={NotFound} />

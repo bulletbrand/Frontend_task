@@ -9,7 +9,7 @@ export const NotFound: FC = (): JSX.Element => {
     <div className={styles.notFoundWrapper}>
       <Tag tag="h2">Page not found</Tag>
       <Button type="button" className={styles.linkButton}>
-        <Link to={routes.WELCOME_PAGE}>Back Home</Link>
+        <Link to={routes.INSURANCES_PAGE}>Back Home</Link>
       </Button>
     </div>
   );

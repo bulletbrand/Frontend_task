@@ -16,7 +16,7 @@ export enum ProductIds {
 }
 
 export interface StepProps {
-  nextStepCallback: (field: string) => void;
+  nextStepCallback: (field: string, validateFields: Array<string>) => void;
   nextStep: string;
 }
 
