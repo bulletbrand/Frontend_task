@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { object } from "yup";
 import { RouteComponentProps } from "react-router-dom";
-import { IDesignerForm, ProductIds } from "../buyflow/Buyflow.types";
+import { ProductIds } from "../Insurances.types";
+import { IDesignerForm, DesignerOrderProps } from "./DesignerInsurances.types";
 import { AgeStep, EmailStep, NamesStep } from "../buyflow";
 import { BuyFlow } from "../buyflow/BuyFlow";
 import { routes } from "../../../routes/routes";
@@ -17,6 +18,11 @@ const formState: IDesignerForm = {
   firstName: "",
   lastName: "",
 };
+
+/*
+  For reusable summaryStep we need guarantee fields order
+ */
+const summaryFieldsOrder: DesignerOrderProps = ["email", "age", "firstName", "lastName"];
 
 const designerFormSchema = object({
   email: emailValidate("Email"),
@@ -42,7 +48,8 @@ export const DesignerBuyFlow: FC<Props> = ({ match }: Props): JSX.Element => {
 
   return (
     <BuyFlow
-      lastStepLink={routes.DEVELOPER_INSURANCES_PAGE}
+      summaryFieldsOrder={summaryFieldsOrder}
+      purchaseLink={routes.DEVELOPER_INSURANCES_PAGE}
       steps={steps}
       formState={formState}
       validationSchema={designerFormSchema}

@@ -5,7 +5,8 @@ import { ObjectSchema } from "yup";
 import { Container, Tag } from "../../../components";
 import { PRODUCT_IDS_TO_NAMES } from "../../../constants/constants";
 import styles from "./buyFlow.module.scss";
-import { IBuyFlowForm, IStep, ProductIds } from "./Buyflow.types";
+import { IBuyFlowForm, IStep } from "./Buyflow.types";
+import { ProductIds } from "../Insurances.types";
 import { usePersistedState } from "../../../hooks/usePersistedState";
 import { useClearLocalStorage } from "../../../hooks/useClearLocalStorage";
 import { SummaryStep } from "./SummaryStep";
@@ -14,8 +15,9 @@ interface IBuyProps {
   steps: Array<IStep>;
   validationSchema: ObjectSchema<any>;
   productId: ProductIds;
-  formState: any;
-  lastStepLink: string;
+  formState: IBuyFlowForm;
+  purchaseLink: string;
+  summaryFieldsOrder: Array<string>;
 }
 
 export const BuyFlow: FC<IBuyProps> = ({
@@ -23,7 +25,8 @@ export const BuyFlow: FC<IBuyProps> = ({
   validationSchema,
   productId,
   formState,
-  lastStepLink,
+  purchaseLink,
+  summaryFieldsOrder,
 }: IBuyProps): JSX.Element => {
   const [currentStep, setStep] = usePersistedState<number>("currentStep", 0);
   const [collectedData, setCollectedData] = usePersistedState<IBuyFlowForm>("collectedData", formState);
@@ -55,7 +58,14 @@ export const BuyFlow: FC<IBuyProps> = ({
   };
 
   const getStepsDisplay = () => {
-    if (currentStep === steps.length) return <SummaryStep link={lastStepLink} collectedData={collectedData} />;
+    if (currentStep === steps.length)
+      return (
+        <SummaryStep
+          summaryFieldsOrder={summaryFieldsOrder}
+          purchaseLink={purchaseLink}
+          collectedData={collectedData}
+        />
+      );
     const Component = steps[currentStep].component;
     return <Component nextStepCallback={getStepCallback} />;
   };
