@@ -1,12 +1,14 @@
 import React from "react";
-import ReactHtmlParser from "react-html-parser";
 import { TagProps } from "./Tag.types";
 
 export const Tag = ({ tag = "p", children, align = "left", color = "black" }: TagProps): JSX.Element => {
-  // Create tag with content from string ( without dangerouslySetInnerHTML )
   const getTagTemplate = (tag: string): React.ReactNode => {
-    const tagWithChildren = "<" + tag + ">" + children;
-    return ReactHtmlParser(tagWithChildren);
+    if (tag === "h1") return <h1>{children}</h1>;
+    if (tag === "h2") return <h2>{children}</h2>;
+    if (tag === "h3") return <h3>{children}</h3>;
+    if (tag === "h4") return <h4>{children}</h4>;
+    if (tag === "h5") return <h5>{children}</h5>;
+    return <p>{children}</p>;
   };
 
   return (

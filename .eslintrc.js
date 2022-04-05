@@ -88,6 +88,7 @@ module.exports = {
     "react/destructuring-assignment": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "react/require-default-props": "off",
+    "@typescript-eslint/no-var-requires": 0,
     "spaced-comment": [
       "error",
       "always",

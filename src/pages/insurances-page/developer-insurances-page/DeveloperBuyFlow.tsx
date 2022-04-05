@@ -6,14 +6,13 @@ import { AgeStep, EmailStep } from "../buyflow";
 import { BuyFlow } from "../buyflow/BuyFlow";
 import { routes } from "../../../routes/routes";
 import { ageValidate, emailValidate } from "../buyflow/buyflow-validation-rules/buyflowValidationRules";
-import { IDeveloperForm, DeveloperOrderProps } from "./DeveloperInsurances.types";
+import { IDeveloperForm } from "./DeveloperInsurances.types";
+import { IStep } from "../buyflow/Buyflow.types";
 
 const formState: IDeveloperForm = {
   email: "",
   age: 0,
 };
-
-const summaryFieldsOrder: DeveloperOrderProps = ["email", "age"];
 
 const developerFormSchema = object({
   email: emailValidate("Email"),
@@ -29,14 +28,13 @@ type Props = RouteComponentProps<MatchParams>;
 export const DeveloperBuyFlow: FC<Props> = ({ match }: Props): JSX.Element => {
   const { productId } = match.params;
 
-  const steps = [
+  const steps: Array<IStep> = [
     { name: "email", component: EmailStep },
     { name: "age", component: AgeStep },
   ];
 
   return (
     <BuyFlow
-      summaryFieldsOrder={summaryFieldsOrder}
       steps={steps}
       formState={formState}
       purchaseLink={routes.DESIGNER_INSURANCES_PAGE}

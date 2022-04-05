@@ -4,5 +4,3 @@ export interface IDesignerForm {
   firstName: string;
   lastName: string;
 }
-
-export type DesignerOrderProps = Array<keyof IDesignerForm>;
