@@ -1,6 +1,7 @@
 .buyFlowFormWrapper {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   .buyFlowForm {
     width: 600px;
@@ -9,7 +10,14 @@
       margin: 5px 5px 30px 5px;
     }
   }
+  .stepTitle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    flex-direction: row;
+    font-size: 16px;
+    font-weight: bold;
+  }
 }
-.formStepItem {
-  margin: 5px 5px 30px 5px;
-}
+
+

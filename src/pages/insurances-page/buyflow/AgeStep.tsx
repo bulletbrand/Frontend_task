@@ -5,7 +5,7 @@ import { Button } from "../../../components";
 import styles from "./buyFlow.module.scss";
 import { StepProps } from "./Buyflow.types";
 
-export const AgeStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps): JSX.Element => {
+export const AgeStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.Element => {
   const methods = useFormContext();
 
   return (
@@ -21,7 +21,7 @@ export const AgeStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps
           label="Age:"
         />
       </div>
-      <Button type="button" onClick={() => nextStepCallback(nextStep, ["age"])}>
+      <Button type="button" onClick={() => nextStepCallback(["age"])}>
         Next
       </Button>
     </>

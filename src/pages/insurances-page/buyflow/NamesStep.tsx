@@ -5,7 +5,7 @@ import { Input } from "../../../components/input/Input";
 import { Button } from "../../../components";
 import { StepProps } from "./Buyflow.types";
 
-export const NamesStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepProps): JSX.Element => {
+export const NamesStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.Element => {
   const methods = useFormContext();
 
   return (
@@ -30,7 +30,7 @@ export const NamesStep: FC<StepProps> = ({ nextStepCallback, nextStep }: StepPro
           isRequired
         />
       </div>
-      <Button type="button" onClick={() => nextStepCallback(nextStep, ["lastName", "firstName"])}>
+      <Button type="button" onClick={() => nextStepCallback(["lastName", "firstName"])}>
         Next
       </Button>
     </>

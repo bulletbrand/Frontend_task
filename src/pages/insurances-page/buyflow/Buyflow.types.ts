@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IInsuranceForm {
   email: string;
   age: number;
@@ -16,10 +18,19 @@ export enum ProductIds {
 }
 
 export interface StepProps {
-  nextStepCallback: (field: string, validateFields: Array<string>) => void;
-  nextStep: string;
+  nextStepCallback: (validateFields: Array<string>) => void;
 }
 
 export interface ISummaryProps<T> {
   collectedData: T;
+  link: string;
+}
+
+export interface IStep {
+  name: string;
+  component: any;
+}
+
+export interface IBuyFlowForm {
+  [key: string]: any;
 }

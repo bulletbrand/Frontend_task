@@ -1,22 +1,15 @@
 import React, { FC } from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { string, object, number } from "yup";
+import { object } from "yup";
 import { RouteComponentProps } from "react-router-dom";
-import { NamesStep, AgeStep, EmailStep, SummaryStep } from "../buyflow";
-import { Tag, Container } from "../../../components";
 import { IDesignerForm, ProductIds } from "../buyflow/Buyflow.types";
-import { PRODUCT_IDS_TO_NAMES } from "../../../constants/constants";
-import styles from "../buyflow/buyFlow.module.scss";
+import { AgeStep, EmailStep, NamesStep } from "../buyflow";
+import { BuyFlow } from "../buyflow/BuyFlow";
+import { routes } from "../../../routes/routes";
 import {
-  AGE_REQUIRED_MESSAGE,
-  EMAIL_INVALID_MESSAGE,
-  EMAIL_REQUIRED_MESSAGE,
-  FIRST_NAME_REQUIRED_MESSAGE,
-  LAST_NAME_REQUIRED_MESSAGE,
-} from "../../../constants/messages";
-import { usePersistedState } from "../../../hooks/usePersistedState";
-import { useClearLocalStorage } from "../../../hooks/useClearLocalStorage";
+  ageValidate,
+  emailValidate,
+  textFieldValidate,
+} from "../buyflow/buyflow-validation-rules/buyflowValidationRules";
 
 const formState: IDesignerForm = {
   email: "",
@@ -25,19 +18,11 @@ const formState: IDesignerForm = {
   lastName: "",
 };
 
-const FIRST_STEP = "email";
-const LAST_STEP = "summary";
-
 const designerFormSchema = object({
-  email: string().email(EMAIL_INVALID_MESSAGE).required(EMAIL_REQUIRED_MESSAGE).max(80),
-  age: number()
-    .transform((value) => (Number.isNaN(value) ? undefined : value))
-    .nullable()
-    .required(AGE_REQUIRED_MESSAGE)
-    .positive()
-    .max(125),
-  firstName: string().required(FIRST_NAME_REQUIRED_MESSAGE).max(60),
-  lastName: string().required(LAST_NAME_REQUIRED_MESSAGE).max(60),
+  email: emailValidate("Email"),
+  age: ageValidate("Age"),
+  firstName: textFieldValidate("First name"),
+  lastName: textFieldValidate("Last name"),
 });
 
 interface MatchParams {
@@ -47,58 +32,21 @@ interface MatchParams {
 type Props = RouteComponentProps<MatchParams>;
 
 export const DesignerBuyFlow: FC<Props> = ({ match }: Props): JSX.Element => {
-  const [currentStep, setStep] = usePersistedState<string>("currentStep", FIRST_STEP);
-  const [collectedData, setCollectedData] = usePersistedState<IDesignerForm>("collectedData", formState);
-  useClearLocalStorage(["collectedData", "currentStep"]); // clear local storage when component unmount
   const { productId } = match.params;
 
-  const methods = useForm<IDesignerForm>({
-    defaultValues: collectedData,
-    mode: "onTouched",
-    reValidateMode: "onChange",
-    resolver: yupResolver(designerFormSchema),
-  });
-
-  const onSubmit = (data: IDesignerForm) => {
-    setCollectedData(data);
-  };
-
-  const onStepValidate = async (fields: any) => {
-    await methods.trigger(fields);
-  };
-
-  const getStepDesignerCallback = async (nextStep: string, fields: any) => {
-    await onStepValidate(fields);
-    if (Object.entries(methods.formState.errors)?.length) return;
-
-    if (nextStep === LAST_STEP) {
-      await methods.handleSubmit(onSubmit)();
-    } else {
-      const fields = methods.getValues();
-      setCollectedData(fields);
-    }
-    setStep(nextStep);
-  };
-
-  const getStepsDisplay = () => {
-    return (
-      (currentStep === "email" && <EmailStep nextStep="age" nextStepCallback={getStepDesignerCallback} />) ||
-      (currentStep === "age" && <AgeStep nextStep="names" nextStepCallback={getStepDesignerCallback} />) ||
-      (currentStep === "names" && <NamesStep nextStep="summary" nextStepCallback={getStepDesignerCallback} />) ||
-      (currentStep === "summary" && <SummaryStep collectedData={collectedData} />)
-    );
-  };
+  const steps = [
+    { name: "email", component: EmailStep },
+    { name: "age", component: AgeStep },
+    { name: "names", component: NamesStep },
+  ];
 
   return (
-    <div>
-      <Tag tag="h2">Buying {PRODUCT_IDS_TO_NAMES[productId]}</Tag>
-      <Container>
-        <div className={styles.buyFlowFormWrapper}>
-          <FormProvider {...methods}>
-            <form className={styles.buyFlowForm}>{getStepsDisplay()}</form>
-          </FormProvider>
-        </div>
-      </Container>
-    </div>
+    <BuyFlow
+      lastStepLink={routes.DEVELOPER_INSURANCES_PAGE}
+      steps={steps}
+      formState={formState}
+      validationSchema={designerFormSchema}
+      productId={productId}
+    />
   );
 };
