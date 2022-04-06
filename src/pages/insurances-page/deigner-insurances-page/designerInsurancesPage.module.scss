@@ -1,6 +1,5 @@
+@import "../../../mixins";
+
 .linkContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 25px;
+  @include linkWrapper
 }

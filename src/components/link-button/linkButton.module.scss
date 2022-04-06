@@ -1,0 +1,15 @@
+.linkButton:link, .linkButton:visited {
+  background-color: var(--black);
+  color: var(--white);
+  border: 2px solid var(--orange);
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 180px;
+  max-width: 220px;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}

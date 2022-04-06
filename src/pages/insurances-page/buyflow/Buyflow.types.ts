@@ -2,11 +2,13 @@ import React from "react";
 
 export interface StepProps {
   nextStepCallback: (validateFields: Array<string>) => void;
+  prevStepCallback: () => void;
+  isPrevStepVisible: boolean;
 }
 
 export interface ISummaryProps<T> {
   collectedData: T;
-  purchaseLink: string;
+  onPurchase: () => void;
   summaryFieldsOrder: Array<string>;
 }
 

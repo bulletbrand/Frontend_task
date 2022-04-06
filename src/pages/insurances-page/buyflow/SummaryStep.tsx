@@ -1,11 +1,12 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
 import { IBuyFlowForm, ISummaryProps } from "./Buyflow.types";
+import { formatLabels } from "../../../utils/helpers";
+import { Button } from "../../../components";
 import styles from "./buyFlow.module.scss";
 
 export const SummaryStep: FC<ISummaryProps<IBuyFlowForm>> = ({
   collectedData,
-  purchaseLink,
+  onPurchase,
   summaryFieldsOrder,
 }): JSX.Element => {
   return (
@@ -14,13 +15,13 @@ export const SummaryStep: FC<ISummaryProps<IBuyFlowForm>> = ({
         {summaryFieldsOrder.map((step) => {
           return (
             <div>
-              <b>{step}</b> : {collectedData[step]}
+              <b>{formatLabels(step)}</b> : {collectedData[step]}
             </div>
           );
         })}
       </div>
       <div>
-        <Link to={purchaseLink}>Purchase</Link>
+        <Button onClick={onPurchase}>Purchase</Button>
       </div>
     </div>
   );

@@ -1,8 +1,5 @@
-.insurancesWrapper {
-  .linkContainer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-  }
+@import "../../mixins";
+
+.linkContainer {
+  @include linkWrapper
 }

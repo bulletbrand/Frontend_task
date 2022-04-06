@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import styles from "./buyFlow.module.scss";
-import { Input } from "../../../components/input/Input";
-import { Button } from "../../../components";
 import { StepProps } from "./Buyflow.types";
+import { StepperNavigation, Input } from "../../../components";
+import styles from "./buyFlow.module.scss";
 
-export const NamesStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.Element => {
+export const NamesStep: FC<StepProps> = ({
+  nextStepCallback,
+  prevStepCallback,
+  isPrevStepVisible,
+}: StepProps): JSX.Element => {
   const methods = useFormContext();
 
   return (
@@ -15,7 +18,7 @@ export const NamesStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.E
           {...methods.register("firstName")}
           error={methods.formState.errors.firstName}
           aria-invalid={!!methods.formState.errors.firstName}
-          placeholder="First Name"
+          placeholder="First name"
           label="First name:"
           isRequired
         />
@@ -30,9 +33,11 @@ export const NamesStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.E
           isRequired
         />
       </div>
-      <Button type="button" onClick={() => nextStepCallback(["lastName", "firstName"])}>
-        Next
-      </Button>
+      <StepperNavigation
+        backCallback={prevStepCallback}
+        isPrevStepVisible={isPrevStepVisible}
+        nextStepCallback={() => nextStepCallback(["lastName", "firstName"])}
+      />
     </>
   );
 };

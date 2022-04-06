@@ -2,8 +2,7 @@ import React, { FC } from "react";
 import { object } from "yup";
 import { RouteComponentProps } from "react-router-dom";
 import { ProductIds } from "../Insurances.types";
-import { AgeStep, EmailStep } from "../buyflow";
-import { BuyFlow } from "../buyflow/BuyFlow";
+import { AgeStep, EmailStep, BuyFlow } from "../buyflow";
 import { routes } from "../../../routes/routes";
 import { ageValidate, emailValidate } from "../buyflow/buyflow-validation-rules/buyflowValidationRules";
 import { IDeveloperForm } from "./DeveloperInsurances.types";
@@ -25,19 +24,19 @@ interface MatchParams {
 
 type Props = RouteComponentProps<MatchParams>;
 
+const steps: Array<IStep> = [
+  { name: "email", component: EmailStep },
+  { name: "age", component: AgeStep },
+];
+
 export const DeveloperBuyFlow: FC<Props> = ({ match }: Props): JSX.Element => {
   const { productId } = match.params;
-
-  const steps: Array<IStep> = [
-    { name: "email", component: EmailStep },
-    { name: "age", component: AgeStep },
-  ];
 
   return (
     <BuyFlow
       steps={steps}
       formState={formState}
-      purchaseLink={routes.DESIGNER_INSURANCES_PAGE}
+      purchaseLink={routes.DEVELOPER_INSURANCES_PAGE}
       validationSchema={developerFormSchema}
       productId={productId}
     />

@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { Input } from "../../../components/input/Input";
-import { Button } from "../../../components";
-import styles from "./buyFlow.module.scss";
 import { StepProps } from "./Buyflow.types";
+import { StepperNavigation, Input } from "../../../components";
+import styles from "./buyFlow.module.scss";
 
-export const AgeStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.Element => {
+export const AgeStep: FC<StepProps> = ({
+  nextStepCallback,
+  prevStepCallback,
+  isPrevStepVisible,
+}: StepProps): JSX.Element => {
   const methods = useFormContext();
 
   return (
@@ -21,9 +24,11 @@ export const AgeStep: FC<StepProps> = ({ nextStepCallback }: StepProps): JSX.Ele
           label="Age:"
         />
       </div>
-      <Button type="button" onClick={() => nextStepCallback(["age"])}>
-        Next
-      </Button>
+      <StepperNavigation
+        backCallback={prevStepCallback}
+        isPrevStepVisible={isPrevStepVisible}
+        nextStepCallback={() => nextStepCallback(["age"])}
+      />
     </>
   );
 };
