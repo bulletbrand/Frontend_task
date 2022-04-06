@@ -11,6 +11,7 @@ import {
 } from "../../pages/insurances-page/buyflow/buyflow-validation-rules/buyflowValidationRules";
 import { routes } from "../../routes/routes";
 import { renderWithMemory } from "../../utils/testUtils";
+import { ProductIds } from "../../pages/insurances-page/Insurances.types";
 
 const steps = [
   { name: "email", component: EmailStep },
@@ -27,7 +28,7 @@ const formState = {
   age: 0,
 };
 
-let matchMedia;
+let matchMedia: MatchMediaMock;
 
 describe("Step renders correctly page tests", () => {
   beforeAll(async () => {
@@ -43,7 +44,7 @@ describe("Step renders correctly page tests", () => {
       <BuyFlow
         steps={steps}
         validationSchema={validationSchema}
-        productId="dev_ins"
+        productId={ProductIds.devIns}
         formState={formState}
         purchaseLink=""
       />
@@ -60,7 +61,7 @@ describe("Step renders correctly page tests", () => {
       <BuyFlow
         steps={steps}
         validationSchema={validationSchema}
-        productId="dev_ins"
+        productId={ProductIds.devIns}
         formState={formState}
         purchaseLink=""
       />
@@ -80,7 +81,7 @@ describe("Step renders correctly page tests", () => {
       <BuyFlow
         steps={steps}
         validationSchema={validationSchema}
-        productId="dev_ins"
+        productId={ProductIds.devIns}
         formState={formState}
         purchaseLink=""
       />
@@ -99,7 +100,7 @@ describe("Step renders correctly page tests", () => {
     });
     // Age page shows and works correctly
     expect(stepTitle).toHaveTextContent("Step 2 of 2");
-    const ageField = screen.getByPlaceholderText("Age");
+    const ageField = screen.getByPlaceholderText("Age") as HTMLInputElement;
     userEvent.clear(ageField);
     fireEvent.change(ageField, { target: { value: "33" } });
     expect(ageField.value).toBe("33");
@@ -117,7 +118,7 @@ describe("Step renders correctly page tests", () => {
       <BuyFlow
         steps={steps}
         validationSchema={validationSchema}
-        productId="dev_ins"
+        productId={ProductIds.devIns}
         formState={formState}
         purchaseLink={routes.DESIGNER_INSURANCES_PAGE}
       />

@@ -1,11 +1,11 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import MatchMediaMock from "jest-matchmedia-mock";
-import { act, fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { object } from "yup";
 import userEvent from "@testing-library/user-event";
-import { AgeStep, NamesStep } from "../../pages/insurances-page/buyflow";
+import { NamesStep } from "../../pages/insurances-page/buyflow";
 import { ageValidate } from "../../pages/insurances-page/buyflow/buyflow-validation-rules/buyflowValidationRules";
 import { renderWithReactHookForm } from "../../utils/testUtils";
 
@@ -28,7 +28,7 @@ const props = {
   resolver: yupResolver(validationSchema),
 };
 
-let matchMedia;
+let matchMedia: MatchMediaMock;
 
 describe("Age step tests", () => {
   beforeAll(async () => {
@@ -65,13 +65,13 @@ describe("Age step tests", () => {
       { ...props }
     );
 
-    const firstNameField = screen.getByPlaceholderText("First name");
+    const firstNameField = screen.getByPlaceholderText("First name") as HTMLInputElement;
     expect(firstNameField.value).toBe("");
     userEvent.clear(firstNameField);
     fireEvent.change(firstNameField, { target: { value: "user" } });
     expect(firstNameField.value).toBe("user");
 
-    const lastNameField = screen.getByPlaceholderText("Last name");
+    const lastNameField = screen.getByPlaceholderText("Last name") as HTMLInputElement;
     expect(lastNameField.value).toBe("");
     userEvent.clear(lastNameField);
     fireEvent.change(lastNameField, { target: { value: "user2" } });

@@ -4,10 +4,10 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 export function renderWithReactHookForm(
-  ui,
-  { defaultValues = {}, reValidateMode = "", mode = "", resolver = {} } = {}
+  ui: React.ReactComponentElement<any>,
+  { defaultValues = {}, reValidateMode = "", mode = "", resolver = {} }: any = {}
 ) {
-  const Wrapper = ({ children }) => {
+  const Wrapper = ({ children }: any) => {
     const methods = useForm({ defaultValues, reValidateMode, mode, resolver });
     return (
       <MemoryRouter>
@@ -23,6 +23,6 @@ export function renderWithReactHookForm(
   };
 }
 
-export const renderWithMemory = (component) => {
+export const renderWithMemory = (component: any) => {
   return { ...render(<MemoryRouter>{component}</MemoryRouter>) };
 };

@@ -1,15 +1,11 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import MatchMediaMock from "jest-matchmedia-mock";
-import { MemoryRouter } from "react-router-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { DeveloperInsurancesPage, InsurancesPage } from "../../pages";
+import { renderWithMemory } from "../../utils/testUtils";
 
-export const renderWithMemory = (component) => {
-  return { ...render(<MemoryRouter>{component}</MemoryRouter>) };
-};
-
-let matchMedia;
+let matchMedia: MatchMediaMock;
 
 describe("Insurances page tests", () => {
   beforeAll(async () => {

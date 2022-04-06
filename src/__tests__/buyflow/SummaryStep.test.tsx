@@ -5,7 +5,7 @@ import { screen } from "@testing-library/react";
 import { renderWithReactHookForm } from "../../utils/testUtils";
 import { SummaryStep } from "../../pages/insurances-page/buyflow";
 
-let matchMedia;
+let matchMedia: MatchMediaMock;
 
 const collectedData = {
   email: "user@gmail.com",

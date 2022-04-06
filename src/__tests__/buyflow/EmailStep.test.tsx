@@ -5,7 +5,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { object } from "yup";
 import userEvent from "@testing-library/user-event";
-import { AgeStep, EmailStep } from "../../pages/insurances-page/buyflow";
+import { EmailStep } from "../../pages/insurances-page/buyflow";
 import { ageValidate } from "../../pages/insurances-page/buyflow/buyflow-validation-rules/buyflowValidationRules";
 import { renderWithReactHookForm } from "../../utils/testUtils";
 
@@ -14,19 +14,19 @@ const prevStepCallback = jest.fn();
 const isPrevStepVisible = true;
 
 const validationSchema = object({
-  age: ageValidate("Age"),
+  email: ageValidate("Email"),
 });
 
 const props = {
   defaultValues: {
-    age: 0,
+    email: "",
   },
   mode: "onTouched",
   reValidateMode: "onChange",
   resolver: yupResolver(validationSchema),
 };
 
-let matchMedia;
+let matchMedia: MatchMediaMock;
 
 describe("Age step tests", () => {
   beforeAll(async () => {
@@ -39,7 +39,7 @@ describe("Age step tests", () => {
 
   it("Age step renders correctly", () => {
     renderWithReactHookForm(
-      <AgeStep
+      <EmailStep
         nextStepCallback={nextStepCallback}
         prevStepCallback={prevStepCallback}
         isPrevStepVisible={isPrevStepVisible}
@@ -47,14 +47,14 @@ describe("Age step tests", () => {
       { ...{ ...props } }
     );
 
-    expect(screen.getByPlaceholderText("Age")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
     expect(screen.getByText("Next")).toBeInTheDocument();
     expect(screen.getByText("Back")).toBeInTheDocument();
   });
 
   it("Fields fills correctly", () => {
     renderWithReactHookForm(
-      <AgeStep
+      <EmailStep
         nextStepCallback={nextStepCallback}
         prevStepCallback={prevStepCallback}
         isPrevStepVisible={isPrevStepVisible}
@@ -62,20 +62,16 @@ describe("Age step tests", () => {
       { ...props }
     );
 
-    const ageField = screen.getByPlaceholderText("Age");
-    expect(ageField.value).toBe("0");
-    userEvent.clear(ageField);
-    fireEvent.change(ageField, { target: { value: "22" } });
-    expect(ageField.value).toBe("22");
-
-    userEvent.clear(ageField);
-    fireEvent.change(ageField, { target: { value: "3" } });
-    expect(ageField.value).toBe("3");
+    const emailField = screen.getByPlaceholderText("Email") as HTMLInputElement;
+    expect(emailField.value).toBe("");
+    userEvent.clear(emailField);
+    fireEvent.change(emailField, { target: { value: "user@gmail.com" } });
+    expect(emailField.value).toBe("user@gmail.com");
   });
 
   it("Next, Back callbacks calls", () => {
     renderWithReactHookForm(
-      <AgeStep
+      <EmailStep
         nextStepCallback={nextStepCallback}
         prevStepCallback={prevStepCallback}
         isPrevStepVisible={isPrevStepVisible}
@@ -93,7 +89,7 @@ describe("Age step tests", () => {
 
   it("Back callback invisible when isPrevStepVisible=false", () => {
     renderWithReactHookForm(
-      <AgeStep nextStepCallback={nextStepCallback} prevStepCallback={prevStepCallback} isPrevStepVisible={false} />,
+      <EmailStep nextStepCallback={nextStepCallback} prevStepCallback={prevStepCallback} isPrevStepVisible={false} />,
       { ...props }
     );
 
