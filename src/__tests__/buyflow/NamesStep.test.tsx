@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import MatchMediaMock from "jest-matchmedia-mock";
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, act } from "@testing-library/react";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { object } from "yup";
 import userEvent from "@testing-library/user-event";
@@ -55,7 +55,7 @@ describe("Age step tests", () => {
     expect(screen.getByText("Back")).toBeInTheDocument();
   });
 
-  it("Fields fills correctly", () => {
+  it("Fields fills correctly", async () => {
     renderWithReactHookForm(
       <NamesStep
         nextStepCallback={nextStepCallback}
@@ -67,14 +67,19 @@ describe("Age step tests", () => {
 
     const firstNameField = screen.getByPlaceholderText("First name") as HTMLInputElement;
     expect(firstNameField.value).toBe("");
-    userEvent.clear(firstNameField);
-    fireEvent.change(firstNameField, { target: { value: "user" } });
+    await act(async () => {
+      userEvent.clear(firstNameField);
+      fireEvent.change(firstNameField, { target: { value: "user" } });
+    });
+
     expect(firstNameField.value).toBe("user");
 
     const lastNameField = screen.getByPlaceholderText("Last name") as HTMLInputElement;
     expect(lastNameField.value).toBe("");
-    userEvent.clear(lastNameField);
-    fireEvent.change(lastNameField, { target: { value: "user2" } });
+    await act(async () => {
+      userEvent.clear(lastNameField);
+      fireEvent.change(lastNameField, { target: { value: "user2" } });
+    });
     expect(lastNameField.value).toBe("user2");
   });
 

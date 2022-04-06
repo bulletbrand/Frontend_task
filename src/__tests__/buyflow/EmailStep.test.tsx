@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import MatchMediaMock from "jest-matchmedia-mock";
-import { fireEvent, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { object } from "yup";
 import userEvent from "@testing-library/user-event";
@@ -52,7 +52,7 @@ describe("Age step tests", () => {
     expect(screen.getByText("Back")).toBeInTheDocument();
   });
 
-  it("Fields fills correctly", () => {
+  it("Fields fills correctly", async () => {
     renderWithReactHookForm(
       <EmailStep
         nextStepCallback={nextStepCallback}
@@ -64,8 +64,10 @@ describe("Age step tests", () => {
 
     const emailField = screen.getByPlaceholderText("Email") as HTMLInputElement;
     expect(emailField.value).toBe("");
-    userEvent.clear(emailField);
-    fireEvent.change(emailField, { target: { value: "user@gmail.com" } });
+    await act(async () => {
+      userEvent.clear(emailField);
+      fireEvent.change(emailField, { target: { value: "user@gmail.com" } });
+    });
     expect(emailField.value).toBe("user@gmail.com");
   });
 
