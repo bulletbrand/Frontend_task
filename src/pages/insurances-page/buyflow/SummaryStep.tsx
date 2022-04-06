@@ -14,7 +14,7 @@ export const SummaryStep: FC<ISummaryProps<IBuyFlowForm>> = ({
       <div className={styles.summaryFieldsContainer}>
         {summaryFieldsOrder.map((step) => {
           return (
-            <div>
+            <div key={step} data-testid="summary_field">
               <b>{formatLabels(step)}</b> : {collectedData[step]}
             </div>
           );

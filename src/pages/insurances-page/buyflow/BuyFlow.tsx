@@ -83,7 +83,7 @@ export const BuyFlow: FC<IBuyFlowProps> = (props: IBuyFlowProps): JSX.Element =>
   };
 
   const getStepTitleText = (): string => {
-    if (currentStep < steps.length - 1) return `Step ${currentStep + 1} of ${steps.length}`;
+    if (currentStep < steps.length) return `Step ${currentStep + 1} of ${steps.length}`;
     return "Summary";
   };
 
@@ -93,7 +93,9 @@ export const BuyFlow: FC<IBuyFlowProps> = (props: IBuyFlowProps): JSX.Element =>
       <Container>
         <div className={styles.buyFlowFormWrapper}>
           <FormProvider {...methods}>
-            <div className={styles.stepTitle}>{getStepTitleText()}</div>
+            <div data-testid="step_title" className={styles.stepTitle}>
+              {getStepTitleText()}
+            </div>
             {!isLoading ? (
               <form className={styles.buyFlowForm}>{getStepsDisplay()}</form>
             ) : (
