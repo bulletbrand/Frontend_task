@@ -44,7 +44,7 @@ describe("Age step tests", () => {
         prevStepCallback={prevStepCallback}
         isPrevStepVisible={isPrevStepVisible}
       />,
-      { ...{ ...props } }
+      { ...props }
     );
 
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();

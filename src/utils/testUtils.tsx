@@ -5,7 +5,7 @@ import React from "react";
 
 export function renderWithReactHookForm(
   ui: React.ReactElement,
-  { defaultValues = {}, reValidateMode = "", mode = "", resolver = {} }: any = {}
+  { defaultValues = {}, reValidateMode, mode, resolver = {} }: any = {}
 ) {
   const Wrapper = ({ children }: any) => {
     const methods = useForm({ defaultValues, reValidateMode, mode, resolver });
